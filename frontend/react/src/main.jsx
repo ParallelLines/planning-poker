@@ -1,13 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Root from './routes/root'
-import { createBrowserRouter } from 'react-router-dom'
-
-
+import PockerApp from './PackerApp'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Root />
+    <PockerApp />
   </React.StrictMode>,
 )

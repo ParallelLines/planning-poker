@@ -1,6 +1,4 @@
-import { Outlet } from 'react-router-dom'
-
-export default function Root() {
+export default function PockerApp() {
     return (
         <>
             <header>
@@ -12,9 +10,8 @@ export default function Root() {
             </header >
 
             <main>
-                <Outlet />
+
             </main>
         </>
-
     )
 }
