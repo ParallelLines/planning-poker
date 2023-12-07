@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich">
+    <link href="./reset.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <title>=^_^= scrum planning poker</title>
+</head>
+
+<body>
+
+    <header>
+        <svg id="logo" width="64px" height="64px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:serif="http://www.serif.com/" viewBox="0 0 9 11" version="1.1" xml:space="preserve"
+            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+            <g>
+                <path
+                    d="M6.997,0L6.996,-0L8.008,0L8.004,1.004L9,1.002C8.999,2.335 9,5 9,5L8,5L8,6L9,6C9,6 8.999,9.626 9,11L1,11L1,6L0,6L0,5L2,5L2,10L3,10L3,7L4,7L4,6L5,6L5,5L4,5L4,1L5,1L5,0L5.999,0L5.998,2L7.001,2.001C7.001,2.001 7.007,0.068 6.997,0ZM6,3L5,3L5,4L6,4L6,3ZM8,3L7,3L7,4L8,4L8,3Z" />
+            </g>
+        </svg>
+    </header>
+
+    <nav class="settings">
+        <button id="settings-btn" class="svg-btn toggle-btn" name="toggle settings" data-target="collapsible-menu">
+            <svg class="switch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10">
+                <path d="M5,9L5,10L6,10L6,9L7,9L7,7L4,7L4,9L5,9ZM10,9L9,9L9,10L10,10L10,9ZM1,3L1,10L2,10L2,3L3,3L3,1L2,1L2,0L1,0L1,1L0,1L0,3L1,3ZM10,3L10,0L9,0L9,3L8,3L8,5L9,5L9,9L10,9L10,5L11,5L11,3L10,3ZM6,6L5,6L5,7L6,7L6,6ZM6,6L6,0L5,0L5,6L6,6Z"/>
+            </svg>
+            <svg class="cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+                <path d="M2,12L0,12L0,14L2,14L2,12ZM14,12L12,12L12,14L14,14L14,12ZM4,10L2,10L2,12L4,12L4,10ZM12,10L10,10L10,12L12,12L12,10ZM6,8L4,8L4,10L6,10L6,8ZM10,8L8,8L8,10L10,10L10,8ZM8,6L6,6L6,8L8,8L8,6ZM6,4L4,4L4,6L6,6L6,4ZM10,4L8,4L8,6L10,6L10,4ZM2,2L2,0L0,0L0,2L2,2L2,4L4,4L4,2L2,2ZM12,2L10,2L10,4L12,4L12,2ZM14,-0L12,-0L12,2L14,2L14,-0Z"/>
+            </svg>
+        </button>
+        <ul id="collapsible-menu" class="menu collapsible" data-toggler="settings-btn">
+            <li class="menu-item">stop moderating</li>
+            <li class="menu-item">give moderating to...</li>
+            <li class="menu-item">leave the room</li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="stats">
+            <span>average <span class="average-result">26.7</span></span>
+            <time datetime="PT15M43S">15:43</time>
+        </div>
+
+        <div class="pi-chart">
+        </div>
+
+        <div class="control-btns">
+            <button id="new-round-btn" class="usual-btn" name="start new round" onclick="location.href='game.html';">start new round</button>
+        </div>
+
+        <div class="copy-link">
+            <button id="copy-link-btn" class="svg-btn" name="copy link">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20">
+                    <path d="M2,6L2,18L10,18L10,6L2,6ZM12,14L14,14L14,2L6,2L6,4L12,4L12,14ZM12,20L0,20L0,4L4,4L4,0L16,0L16,16L12,16L12,20Z"/>
+                </svg>
+            </button>
+            <label for="copy-link-btn">session id 12344567709</label>
+        </div>
+    </main>
+
+    <aside class="participants">
+        <div class="title">
+            <div class="progressbar"></div>
+            <button id="show-participants-btn" class="svg-btn toggle-btn" name="toggle participants" data-target="collapsible-participants-list">
+                <svg class="switch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <path d="M18,12L10,12L10,16L14,16L10,16L10,20L12,20L12,28L16,28L16,20L18,20L18,12ZM0,20L2,20L2,28L6,28L6,20L8,20L8,12L0,12L0,20ZM26,24L22,24L22,28L26,28L26,24ZM28,20L28,12L20,12L20,20L22,20L22,24L26,24L26,20L28,20ZM6,6L2,6L2,10L6,10L6,6ZM16,6L12,6L12,10L16,10L16,6ZM26,6L22,6L22,10L26,10L26,6ZM12,-0L8,-0L8,4L12,4L12,-0ZM20,-0L16,-0L16,4L20,4L20,-0Z"/>
+                </svg>
+                <svg class="cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+                    <path d="M2,12L0,12L0,14L2,14L2,12ZM14,12L12,12L12,14L14,14L14,12ZM4,10L2,10L2,12L4,12L4,10ZM12,10L10,10L10,12L12,12L12,10ZM6,8L4,8L4,10L6,10L6,8ZM10,8L8,8L8,10L10,10L10,8ZM8,6L6,6L6,8L8,8L8,6ZM6,4L4,4L4,6L6,6L6,4ZM10,4L8,4L8,6L10,6L10,4ZM2,2L2,0L0,0L0,2L2,2L2,4L4,4L4,2L2,2ZM12,2L10,2L10,4L12,4L12,2ZM14,-0L12,-0L12,2L14,2L14,-0Z"/>
+                </svg>
+            </button>
+            <div class="vote-counter">
+                <span class="did-vote">7</span>/26
+            </div>
+        </div>
+        <div id="collapsible-participants-list" class="scrollable-col" data-toggler="show-participants-btn">
+            <div class="participant">
+                <span class="vote-indicator voted"></span>
+                <span class="participant-name">Daenerys Stormborn of House Ta
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 30 26">
+                        <path d="M14,24L8,24L8,22L6,22L6,18L4,18L4,22L6,22L6,26L14,26L14,24ZM14,26L24,26L24,22L22,22L22,24L14,24L14,26ZM26,22L26,18L24,18L24,22L26,22ZM28,16L26,16L26,18L28,18L28,16ZM28,14L26,14L26,16L28,16L28,14ZM22,12L20,12L20,14L22,14L22,12ZM28,10L28,12L26,12L26,14L28,14L28,12L30,12L30,10L28,10ZM14,8L14,4L12,4L12,8L10,8L10,12L8,12L8,10L6,10L6,12L8,12L8,14L10,14L10,12L12,12L12,8L14,8ZM20,10L18,10L18,12L20,12L20,10ZM24,10L22,10L22,12L24,12L24,10ZM30,8L28,8L28,10L30,10L30,8ZM26,8L24,8L24,10L26,10L26,8ZM20,8L18,8L18,10L20,10L20,8ZM4,12L2,12L2,8L4,8L4,10L6,10L6,8L4,8L4,6L2,6L2,4L0,4L0,12L2,12L2,18L4,18L4,12ZM30,8L30,4L28,4L28,6L26,6L26,8L30,8ZM18,8L18,4L16,4L16,8L18,8ZM16,2L14,2L14,4L16,4L16,2ZM16,0L14,0L14,2L16,2L16,0Z" style="fill:rgb(255,178,0);"/>
+                    </svg>
+                </span>
+                <span class="result">100</span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator voted"></span>
+                <span class="participant-name">Vitas</span>
+                <span class="result">0.5</span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator voted"></span>
+                <span class="participant-name">Tishka</span>
+                <span class="result">3</span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator voted"></span>
+                <span class="participant-name">Thurston Waffles</span>
+                <span class="result">?</span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">anonimus</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator voted"></span>
+                <span class="participant-name">Mei</span>
+                <span class="result">20</span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Ayanami Rei</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Asuka Soryu Langley</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Sinji [polezai v yobanogo robota] Ikari</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Suzuki Haruhi</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator voted"></span>
+                <span class="participant-name">Kyon</span>
+                <span class="result">0</span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Eva 01</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator voted"></span>
+                <span class="participant-name">Shades on Leaves be gone</span>
+                <span class="result">40</span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Rot Geganger Tot Geganger</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Kot Vasiliy</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Iduschiy k reke</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Serious Sam</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Were's my lasagna?</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">;l&*#$$%%sdkvnsdfj</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Directed by Robert B. Weide</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Were's my lasagna?</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">;l&*#$$%%sdkvnsdfj</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Directed by Robert B. Weide</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Were's my lasagna?</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">;l&*#$$%%sdkvnsdfj</span>
+                <span class="result"></span>
+            </div>
+            <div class="participant">
+                <span class="vote-indicator"></span>
+                <span class="participant-name">Directed by Robert B. Weide</span>
+                <span class="result"></span>
+            </div>
+        </div>
+    </aside>
+
+    <script src="collapsibles.js"></script>
+</body>
+
+</html>
