@@ -218,7 +218,6 @@ input:focus {
     border: none;
     background: none;
     box-shadow: none;
-    padding: 0.1rem;
 }
 
 .svg-btn:hover {
@@ -232,7 +231,7 @@ input:focus {
 }
 
 .svg-btn svg {
-    width: 1.7rem;
+    /* width: 1.7rem; */
     height: 1.7rem;
     fill: var(--primary-color);
 }
@@ -281,7 +280,6 @@ input:focus {
 .scrollable-col {
     height: 95vh;
     overflow-y: auto;
-    margin-top: 0.3rem;
     font-size: 0.85rem;
 }
 
