@@ -24,15 +24,4 @@ function closeCollapsiblesWhenClickAnywhere(e) {
     }
 } 
 
-function makeParticipantsCollapsible() {
-    const participants = document.querySelector("#collapsible-participants-list")
-    if (window.innerWidth < 705) {
-        participants.classList.add("collapsible")
-    } else {
-        participants.classList.remove("collapsible")
-    }
-}
-
-makeParticipantsCollapsible()
 document.addEventListener("click", closeCollapsiblesWhenClickAnywhere, false)
-window.addEventListener("resize", makeParticipantsCollapsible)
