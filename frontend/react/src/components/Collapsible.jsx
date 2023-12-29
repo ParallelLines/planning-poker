@@ -9,24 +9,19 @@ export default function Collapsible(props) {
     const togglerRef = useRef(null)
 
     const handleClick = () => {
-        console.log(`handling click, state: ${open}`)
         setOpen(!open)
     }
 
     useEffect(() => {
-        console.log(`using effect, state: ${open}`)
         const handleOutsideClick = (e) => {
             if (!collapsibleRef.current.contains(e.target) && !togglerRef.current.contains(e.target)) {
-                console.log('the click was not on collapsible, so closing the window')
                 setOpen(false)
             }
         }
         if (open) {
-            console.log('adding event listener')
             document.addEventListener('click', handleOutsideClick, false)
         }
         return () => {
-            console.log('removing event listener')
             document.removeEventListener('click', handleOutsideClick, false)
         }
     }, [open])
