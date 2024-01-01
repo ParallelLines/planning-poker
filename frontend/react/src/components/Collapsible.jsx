@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react"
-import IconCross from "./IconCross"
-import IconParticipants from "./IconParticipants"
-import IconSettings from "./IconSettings"
 
-export default function Collapsible(props) {
+export default function Collapsible({ children, wrapperId, wrapperClass, togglerInsides }) {
     const [open, setOpen] = useState(false)
     const collapsibleRef = useRef(null)
     const togglerRef = useRef(null)
@@ -34,12 +31,10 @@ export default function Collapsible(props) {
                 onClick={handleClick}
                 ref={togglerRef}
             >
-                {props.type === "settings" ? <IconSettings /> : null}
-                {props.type === "participants" ? <IconParticipants /> : null}
-                <IconCross />
+                {togglerInsides}
             </button>
-            <ul id={props.id} className={`menu collapsible ${open ? "opened" : ""}`} ref={collapsibleRef}>
-                {props.children}
+            <ul id={wrapperId} className={`${wrapperClass} ${open ? "opened" : ""}`} ref={collapsibleRef}>
+                {children}
             </ul>
         </>
     )
