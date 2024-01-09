@@ -62,7 +62,6 @@ header {
 
 nav {
     grid-area: header-right;
-    padding-top: 0.5rem;
     padding-right: 0.5rem;
 }
 
@@ -82,6 +81,7 @@ main>* {
 
 aside.participants {
     grid-area: left-sidebar;
+    position: relative;
 }
 
 #logo {
@@ -274,7 +274,11 @@ input:focus {
 }
 
 .vote-counter {
-    margin-top: 0.2rem;
+    color: var(--secondary-color);
+        position: absolute;
+        top: 0.5rem;
+        left: 50%;
+        transform: translate(-50%, 0);
 }
 
 .scrollable-col {
@@ -357,7 +361,7 @@ input:focus {
 .settings {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-end;
 }
 
@@ -414,8 +418,13 @@ input:focus {
     }
 
     aside.participants {
+        display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: space-between;
         grid-area: header;
         max-width: 30%;
+        /* padding-top: 0.5rem; */
     }
 
     #show-participants-btn {
@@ -459,9 +468,7 @@ input:focus {
     }
 
     .title {
-        background-color: transparent;
-        padding-top: 0.5rem;
-        justify-content: space-between;
+        display: none;
     }
 
     .progressbar {
@@ -477,6 +484,8 @@ input:focus {
         margin: 0;
         max-width: 50%;
         overflow-y: hidden;
+        position: static;
+            transform: none;
     }
 }
 

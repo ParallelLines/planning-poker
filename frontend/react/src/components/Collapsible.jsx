@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
-export default function Collapsible({ children, wrapperId, wrapperClass, togglerInsides }) {
+export default function Collapsible({ children, wrapperId, wrapperClass, togglerId, togglerInsides }) {
     const [open, setOpen] = useState(false)
     const collapsibleRef = useRef(null)
     const togglerRef = useRef(null)
@@ -26,6 +26,7 @@ export default function Collapsible({ children, wrapperId, wrapperClass, toggler
     return (
         <>
             <button
+                id={togglerId}
                 className={`svg-btn toggle-btn ${open ? "close-btn" : ""}`}
                 name="toggle"
                 onClick={handleClick}

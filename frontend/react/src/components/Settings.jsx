@@ -8,6 +8,7 @@ export default function Settings() {
             <Collapsible
                 wrapperId="collapsible-menu"
                 wrapperClass="menu collapsible"
+                togglerId="settings-btn"
                 togglerInsides={<><IconSettings /> <IconCross /></>}
             >
                 <li className="menu-item">stop moderating</li>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import IconParticipants from "./IconParticipants"
 import IconCross from "./IconCross"
+import IconCrown from "./IconCrown"
+import Collapsible from "./Collapsible"
 
 const participantsList = [
     {
@@ -169,29 +171,28 @@ export default function Participants() {
         <aside className="participants">
             <div className="title">
                 <div className="progressbar"></div>
-                <button id="show-participants-btn" className="svg-btn toggle-btn" name="toggle participants" data-target="collapsible-participants-list">
-                    <IconParticipants />
-                    <IconCross />
-                </button>
-                <div className="vote-counter">
-                    <span className="did-vote">7</span>/26
-                </div>
             </div>
-            <ul id="collapsible-participants-list" className={`scrollable-col ${isMobile ? 'collapsible' : ''}`} data-toggler="show-participants-btn">
+            <Collapsible
+                wrapperId="collapsible-participants-list"
+                wrapperClass={`scrollable-col ${isMobile ? 'collapsible' : ''}`}
+                togglerId="show-participants-btn"
+                togglerInsides={<><IconParticipants /> <IconCross /></>}
+            >
                 {participantsList.map((person, i) => {
                     return (
                         <li className="participant" key={i}>
                             <span className={person.voted ? "vote-indicator voted" : "vote-indicator"}></span>
                             <span className="participant-name">{person.name}
-                                {person.isAdmin ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 26" width="15" hight="15">
-                                    <path d="M2,24L2,6L0,6L0,26L30,26L30,6L28,6L28,24L2,24ZM12,14L12,8L10,8L10,12L8,12L8,10L6,10L6,14L8,14L8,16L10,16L10,14L12,14ZM18,8L18,14L20,14L20,16L22,16L22,14L24,14L24,10L22,10L22,12L20,12L20,8L18,8ZM6,10L6,6L4,6L4,10L6,10ZM26,10L26,6L24,6L24,10L26,10ZM18,6L16,6L16,8L18,8L18,6ZM14,6L12,6L12,8L14,8L14,6ZM0,6L4,6L4,4L0,4L0,6ZM18,4L16,4L16,6L18,6L18,4ZM30,4L26,4L26,6L30,6L30,4ZM14,4L12,4L12,6L14,6L14,4ZM26,4L30,4L30,2L26,2L26,4ZM4,2L0,2L0,4L4,4L4,2ZM16,2L14,2L14,4L16,4L16,2ZM2,0L0,0L0,2L2,2L2,0ZM16,0L14,0L14,2L16,2L16,0ZM30,0L28,0L28,2L30,2L30,0Z" style={{ fill: "rgb(255,178,0)" }} />
-                                </svg> : null}
+                                {person.isAdmin ? <IconCrown /> : null}
                             </span>
                             <span className="result">{person.result}</span>
                         </li>
                     )
                 })}
-            </ul>
+            </Collapsible>
+            <div className="vote-counter">
+                <span className="did-vote">7</span>/26
+            </div>
         </aside>
     )
 }
