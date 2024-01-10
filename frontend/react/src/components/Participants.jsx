@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import IconParticipants from "./IconParticipants"
-import IconCross from "./IconCross"
-import IconCrown from "./IconCrown"
-import Collapsible from "./Collapsible"
+import { useEffect, useState } from 'react'
+import IconParticipants from './IconParticipants'
+import IconCross from './IconCross'
+import IconCrown from './IconCrown'
+import Collapsible from './Collapsible'
 
 const participantsList = [
     {
@@ -161,7 +161,7 @@ export default function Participants() {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 705)
 
     useEffect(() => {
-        window.addEventListener("resize", () => {
+        window.addEventListener('resize', () => {
             const isSmall = window.innerWidth < 705
             if (isSmall ^ isMobile) setIsMobile(isSmall)
         })

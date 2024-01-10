@@ -1,6 +1,6 @@
-import Collapsible from "./Collapsible"
-import IconCross from "./IconCross"
-import IconSettings from "./IconSettings"
+import Collapsible from './Collapsible'
+import IconCross from './IconCross'
+import IconSettings from './IconSettings'
 
 export default function Settings() {
     return (

@@ -1,14 +1,11 @@
-import CreateForm from "./components/CreateForm";
-import Game from "./components/Game";
-import Logo from "./components/Logo";
-import StartForm from "./components/StartForm";
+import CreateForm from './components/CreateForm'
+import Game from './components/Game'
+import Header from './components/Header'
 
 export default function PockerApp() {
     return (
         <>
-            <Logo />
-            {/* <StartForm /> */}
-            {/* <CreateForm /> */}
+            <Header />
             <Game />
         </>
     )
