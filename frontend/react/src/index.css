@@ -58,6 +58,7 @@ header {
     justify-self: center;
     height: 100%;
     padding-top: 0.5rem;
+    position: relative;
 }
 
 nav {
@@ -275,10 +276,10 @@ input:focus {
 
 .vote-counter {
     color: var(--secondary-color);
-        position: absolute;
-        top: 0.5rem;
-        left: 50%;
-        transform: translate(-50%, 0);
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .scrollable-col {
@@ -400,6 +401,25 @@ input:focus {
     display: none;
 }
 
+#relativeSVG-fart {
+    position: absolute;
+    left: -1.3rem;
+    top: 1.8rem;
+}
+
+.fart {
+    opacity: 0;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linejoin: round;
+    stroke-miterlimit: 2;
+    fill: var(--primary-color);
+}
+
+.fart-cloud {
+    fill: var(--primary-color-transparent-25);
+}
+
 @media (max-width: 320px) {
     .error-message {
         width: 90%;
@@ -417,14 +437,19 @@ input:focus {
         height: 2.5rem;
     }
 
+    #relativeSVG-fart {
+        position: absolute;
+        left: -1.3rem;
+        top: 1.5rem;
+    }
+
     aside.participants {
         display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-            justify-content: space-between;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
         grid-area: header;
         max-width: 30%;
-        /* padding-top: 0.5rem; */
     }
 
     #show-participants-btn {
@@ -485,7 +510,7 @@ input:focus {
         max-width: 50%;
         overflow-y: hidden;
         position: static;
-            transform: none;
+        transform: none;
     }
 }
 
