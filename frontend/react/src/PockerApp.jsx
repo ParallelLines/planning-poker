@@ -23,6 +23,10 @@ export default function PockerApp() {
             })
     }
 
+    const joinSession = (sid) => {
+        setSessionId(sid)
+    }
+
     const createUser = (username) => {
         const joinSessionUrl = BACKEND_URL + '/sessions/' + sessionId + '/join'
         axios.post(joinSessionUrl, JSON.stringify({name: username}))
@@ -37,9 +41,9 @@ export default function PockerApp() {
 
     let content
     if (!sessionId) {
-        content = <CreateForm onCreate={createSession} onJoin={createUser} />
+        content = <CreateForm onCreate={createSession} onJoin={joinSession} />
     } else if (sessionId && !userId) {
-        content = <JoinForm onJoin={ createUser } />
+        content = <JoinForm onJoin={createUser} />
     } else {
         content = <Game />
     }
