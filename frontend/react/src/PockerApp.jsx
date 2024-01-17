@@ -35,7 +35,12 @@ export default function PockerApp() {
                 //here we setup websocket
             })
             .catch((error) => {
-                console.log('ERROR while joining a session', error)
+                if (error.response.status === 404) {
+                    setSessionId(null)
+                    console.log('no such session')
+                } else {
+                    console.log(error)
+                }
             })
     }
 
