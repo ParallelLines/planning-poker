@@ -24,7 +24,19 @@ export default function PockerApp() {
     }
 
     const joinSession = (sid) => {
-        setSessionId(sid)
+        const checkSessionUrl = BACKEND_URL + '/sessions' + sid
+        axios.get(checkSessionUrl)
+            .then(() => {
+                setSessionId(sid)
+            })
+            .catch((error) => {
+                if (error.response.status === 404) {
+                    console.log('no such session')
+                } else {
+                    console.log(error)
+                }
+            })
+        
     }
 
     const createUser = (username) => {
