@@ -3,14 +3,22 @@ import Header from './components/Header'
 import { useWebSocket } from 'react-use-websocket'
 import axios from 'axios'
 import CreateForm from './components/CreateForm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import JoinForm from './components/JoinForm'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const BACKEND_URL = 'https://romangaranin.net/pc/api'
 
 export default function PockerApp() {
     const [sessionId, setSessionId] = useState(null)
     const [userId, setUserId] = useState(null)
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(() => {
+        const sid = location.pathname.slice(1)
+        if (sid.length) setSessionId(sid)
+    }, [location])
 
     const createSession = () => {
         const createSessionUrl = BACKEND_URL + '/sessions'
@@ -44,7 +52,10 @@ export default function PockerApp() {
         axios.post(joinSessionUrl, JSON.stringify({name: username}))
             .then((response) => {
                 setUserId(response.data.id)
+                
                 //here we setup websocket
+
+                navigate('/' + sessionId)
             })
             .catch((error) => {
                 if (error.response.status === 404) {
