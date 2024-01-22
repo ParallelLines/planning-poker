@@ -80,7 +80,7 @@ export default function PockerApp() {
         content = <JoinForm onJoin={createUser} />
     } else if (wsURL) {
         console.log(wsURL)
-        content = <Game wsURL={wsURL}/>
+        content = <Game wsURL={wsURL} sessionId={sessionId}/>
     }
 
     return (
