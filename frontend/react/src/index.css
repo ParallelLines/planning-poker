@@ -357,7 +357,7 @@ input:focus {
 .settings {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    padding-top: 0.5rem;
     align-items: flex-end;
 }
 
@@ -439,12 +439,9 @@ input:focus {
     }
 
     aside.participants {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        justify-content: space-between;
         grid-area: header;
         max-width: 30%;
+        padding-top: 0.5rem;
     }
 
     #show-participants-btn {
@@ -501,7 +498,7 @@ input:focus {
         background-color: var(--secondary-color-transparent-20);
         border-radius: var(--border-radius);
         padding: 0.2rem 0.2rem 0rem 0.2rem;
-        margin: 0;
+        margin: 0 0 0 0.5rem;
         max-width: 50%;
         overflow-y: hidden;
         position: static;
