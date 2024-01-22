@@ -349,14 +349,9 @@ input:focus {
 .progressbar {
     background-color: var(--secondary-color-transparent-40);
     height: 100%;
-    width: 60%;
     position: absolute;
     transition: width 1s;
     left: 0;
-}
-
-.title:hover .progressbar {
-    width: 70%;
 }
 
 .settings {
