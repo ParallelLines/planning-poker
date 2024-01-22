@@ -10,6 +10,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket'
 
 export default function Game({ wsURL }) {
     const [participants, setParticipants] = useState([]) 
+    const [votesHidden, setVotesHidden] = useState(true)
 
     console.log('WS url: ', wsURL)
     const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
@@ -27,6 +28,9 @@ export default function Game({ wsURL }) {
     useEffect(() => {
         console.log('new message', lastJsonMessage)
         setParticipants(lastJsonMessage?.votes_info)
+        if (lastJsonMessage?.votes_hidden !== votesHidden) {
+            setVotesHidden(!votesHidden)
+        }
     }, [lastJsonMessage])
 
     return (
@@ -35,9 +39,8 @@ export default function Game({ wsURL }) {
 
             <main>
                 <Stats />
-                <ScoreButtons />
-                <Result />
-                <ControlButtons />
+                {votesHidden ? <ScoreButtons /> : <Result />}
+                <ControlButtons isHidden={votesHidden} />
                 <CopyLinkButton />
             </main>
 
