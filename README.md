@@ -1,6 +1,6 @@
 A Simple Planning Pocker
 
-==run frontend
+== run frontend
 you need node installed.
 download the frontend/react folder
 run from the folder 
