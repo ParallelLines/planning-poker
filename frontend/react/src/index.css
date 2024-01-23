@@ -45,9 +45,11 @@ html {
     color: var(--primary-color);
     display: grid;
     grid-template-columns: 2fr 3fr 2fr;
-    grid-template-rows: 1fr 5fr;
-    grid-template-areas: "left-sidebar header header-right"
-        "left-sidebar main right-sidebar";
+    grid-template-rows: 2fr 5fr 4fr;
+    grid-template-areas: 
+        "left-sidebar header header-right"
+        "left-sidebar main right-sidebar"
+        "left-sidebar errors right-sidebar";
     gap: 1rem 1rem;
     width: 100%;
     height: 100%;
@@ -339,7 +341,7 @@ input:focus {
 }
 
 .error-container {
-    grid-area: right-sidebar;
+    grid-area: errors;
 }
 
 .error-message {
