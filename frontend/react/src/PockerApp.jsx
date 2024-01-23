@@ -16,7 +16,7 @@ export default function PockerApp() {
     const [errorQueue, setErrorQueue] = useState([])
     const navigate = useNavigate()
     const location = useLocation()
-    
+
     const createSession = () => {
         const createSessionUrl = BACKEND_URL + '/sessions'
         axios.post(createSessionUrl)
@@ -48,10 +48,10 @@ export default function PockerApp() {
 
     const createUser = (username) => {
         const joinSessionUrl = BACKEND_URL + '/sessions/' + sessionId + '/join'
-        axios.post(joinSessionUrl, JSON.stringify({name: username}))
+        axios.post(joinSessionUrl, JSON.stringify({ name: username }))
             .then((response) => {
                 setUserId(response.data.id)
-                
+
                 const newWsUrl = BACKEND_URL
                     .replaceAll('https://', 'wss://')
                     .replaceAll('http://', 'ws://')
@@ -93,7 +93,7 @@ export default function PockerApp() {
         content = <JoinForm onJoin={createUser} />
     } else if (wsURL) {
         console.log(wsURL)
-        content = <Game wsURL={wsURL} sessionId={sessionId} onError={addError}/>
+        content = <Game wsURL={wsURL} sessionId={sessionId} onError={addError} />
     }
 
     return (
