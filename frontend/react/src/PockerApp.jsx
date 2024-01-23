@@ -100,7 +100,7 @@ export default function PockerApp() {
         <>
             <Header />
             {content}
-            <div class="error-container">
+            <div className="error-container">
                 {errorQueue.map((err, idx) => (
                     <ErrorMessage key={idx} message={err} onRemove={removeError} />
                 ))}
