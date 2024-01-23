@@ -338,12 +338,16 @@ input:focus {
     color: var(--secondary-color);
 }
 
+.error-container {
+    grid-area: right-sidebar;
+}
+
 .error-message {
-    width: 100%;
     color: var(--error-red);
     border: 0.1rem solid var(--error-red);
     border-radius: var(--border-radius);
     padding: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .progressbar {

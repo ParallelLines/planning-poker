@@ -5,6 +5,7 @@ import CreateForm from './components/CreateForm'
 import { useEffect, useState } from 'react'
 import JoinForm from './components/JoinForm'
 import { useNavigate, useLocation } from 'react-router-dom'
+import ErrorMessage from './components/ErrorMessage'
 
 const BACKEND_URL = 'https://romangaranin.net/pc/api'
 
@@ -12,6 +13,7 @@ export default function PockerApp() {
     const [sessionId, setSessionId] = useState(null)
     const [userId, setUserId] = useState(null)
     const [wsURL, setWsUrl] = useState(null)
+    const [errorQueue, setErrorQueue] = useState([])
     const navigate = useNavigate()
     const location = useLocation()
     
@@ -22,7 +24,8 @@ export default function PockerApp() {
                 setSessionId(response.data.id)
             })
             .catch((error) => {
-                console.log('unfortunately error :(', error)
+                addError(error)
+                console.log(error)
             })
     }
 
@@ -34,9 +37,10 @@ export default function PockerApp() {
             })
             .catch((error) => {
                 if (error.response.status === 404) {
-                    console.log('no such session')
+                    addError('no such session')
                     navigate('/')
                 } else {
+                    addError(error)
                     console.log(error)
                 }
             })
@@ -60,12 +64,21 @@ export default function PockerApp() {
                 if (error.response.status === 404) {
                     setSessionId(null)
                     setWsUrl(null)
-                    console.log('no such session')
+                    addError('no such session :(')
                     navigate('/')
                 } else {
+                    addError(error)
                     console.log(error)
                 }
             })
+    }
+
+    const addError = (newError) => {
+        setErrorQueue(prev => [...prev, newError])
+    }
+
+    const removeError = () => {
+        setErrorQueue(prev => prev.slice(1))
     }
 
     useEffect(() => {
@@ -80,13 +93,18 @@ export default function PockerApp() {
         content = <JoinForm onJoin={createUser} />
     } else if (wsURL) {
         console.log(wsURL)
-        content = <Game wsURL={wsURL} sessionId={sessionId}/>
+        content = <Game wsURL={wsURL} sessionId={sessionId} onError={addError}/>
     }
 
     return (
         <>
             <Header />
             {content}
+            <div class="error-container">
+                {errorQueue.map((err, idx) => (
+                    <ErrorMessage key={idx} message={err} onRemove={removeError} />
+                ))}
+            </div>
         </>
     )
 }

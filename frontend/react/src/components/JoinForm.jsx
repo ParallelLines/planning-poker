@@ -23,7 +23,6 @@ export default function JoinForm({ onJoin }) {
                     value={username} />
                 <button className="big-btn btn-on-input" name="" onClick={handleJoin}>join</button>
             </div>
-            <div className="error-message">no more than 30 characters please</div>
         </main>
     )
 }

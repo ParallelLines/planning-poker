@@ -8,7 +8,7 @@ import Settings from './Settings'
 import Stats from './Stats'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 
-export default function Game({ wsURL, sessionId }) {
+export default function Game({ wsURL, sessionId, onError }) {
     const [participants, setParticipants] = useState([]) 
     const [votesHidden, setVotesHidden] = useState(true)
 
@@ -36,14 +36,12 @@ export default function Game({ wsURL, sessionId }) {
     return (
         <>
             <Settings />
-
             <main>
                 <Stats />
                 {votesHidden ? <ScoreButtons /> : <Result />}
                 <ControlButtons isHidden={votesHidden} />
                 <CopyLinkButton sessionId={sessionId}/>
             </main>
-
             <Participants list={participants}/>
         </>
     )

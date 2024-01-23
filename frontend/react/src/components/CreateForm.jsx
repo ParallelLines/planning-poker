@@ -5,7 +5,6 @@ export default function CreateForm({ onCreate, onJoin }) {
 
     const updateSessionId = (e) => {
         setSessionId(e.target.value)
-        
     }
 
     const handleJoin = () => {
@@ -26,8 +25,6 @@ export default function CreateForm({ onCreate, onJoin }) {
                     value={sessionId} />
                 <button className="big-btn btn-on-input" name="Join session" onClick={handleJoin}>join</button>
             </div>
-            <div className="error-message">can't find session with this id :(</div>
-            <div className="error-message">no more than 20 characters please</div>
         </main>
     )
 }
