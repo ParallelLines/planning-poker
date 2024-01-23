@@ -1,10 +1,8 @@
 :root {
     --background: hsl(0, 0%, 8%);
-
     --color-hue: 199;
     --color-saturation: 80%;
     --color-lightness: 70%;
-
     --primary-color: hsl(var(--color-hue), var(--color-saturation), var(--color-lightness));
     --primary-color-lighted: hsl(var(--color-hue), calc(var(--color-saturation) + 10%), calc(var(--color-lightness) + 15%));
     --primary-color-more-lighted: hsl(var(--color-hue), calc(var(--color-saturation) + 10%), calc(var(--color-lightness) + 20%));
@@ -13,17 +11,14 @@
     --primary-color-transparent-30: hsla(var(--color-hue), var(--color-saturation), var(--color-lightness), 30%);
     --primary-color-transparent-50: hsla(var(--color-hue), var(--color-saturation), var(--color-lightness), 50%);
     --box-shadow: hsl(calc(var(--color-hue) + 20), var(--color-saturation), var(--color-lightness));
-
     /* --secondary-color: hsl(var(--color-hue), var(--color-saturation), calc(var(--color-lightness) - 20%)); */
     --secondary-color: hsl(0, 0%, 77%);
     --secondary-color-lighted: hsl(0, 0%, 88%);
     --secondary-color-transparent-20: hsla(0, 0%, 77%, 20%);
     --secondary-color-transparent-40: hsla(0, 0%, 77%, 40%);
-
     --vote-indicator-voted: hsl(68, 100%, 72%);
     --vote-indicator-shadow: hsl(130, 80%, 55%);
     --error-red: hsl(7, 65%, 56%);
-
     --border-radius: 0.4rem;
 }
 
@@ -46,7 +41,7 @@ html {
     display: grid;
     grid-template-columns: 2fr 3fr 2fr;
     grid-template-rows: 2fr 5fr 4fr;
-    grid-template-areas: 
+    grid-template-areas:
         "left-sidebar header header-right"
         "left-sidebar main right-sidebar"
         "left-sidebar errors right-sidebar";
@@ -328,7 +323,7 @@ input:focus {
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
-    font-size: 0.7rem;
+    font-size: 1rem;
 }
 
 .result {
