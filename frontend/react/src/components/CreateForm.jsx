@@ -7,7 +7,8 @@ export default function CreateForm({ onCreate, onJoin }) {
         setSessionId(e.target.value)
     }
 
-    const handleJoin = () => {
+    const handleJoin = (e) => {
+        e.preventDefault()
         onJoin(sessionId)
     }
 
@@ -15,16 +16,16 @@ export default function CreateForm({ onCreate, onJoin }) {
         <main>
             <button className="big-btn" name="Create session" onClick={onCreate}>create</button>
             <span>or</span>
-            <div className="input-with-btn-container">
-                <input 
-                    type="text" 
-                    className="big-input" 
-                    name="Session ID" 
+            <form onSubmit={handleJoin} className="input-with-btn-container">
+                <input
+                    type="text"
+                    className="big-input"
+                    name="sessionId"
                     placeholder="session id..."
                     onChange={updateSessionId}
                     value={sessionId} />
-                <button className="big-btn btn-on-input" name="Join session" onClick={handleJoin}>join</button>
-            </div>
+                <button className="big-btn btn-on-input" name="Join session">join</button>
+            </form>
         </main>
     )
 }

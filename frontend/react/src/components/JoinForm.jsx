@@ -7,22 +7,23 @@ export default function JoinForm({ onJoin }) {
         setUsername(e.target.value)
     }
 
-    const handleJoin = () => {
+    const handleJoin = (e) => {
+        e.preventDefault()
         onJoin(username)
     }
 
     return (
         <main>
-            <div className="input-with-btn-container">
-                <input 
-                    type="text" 
-                    className="big-input" 
-                    name="" 
+            <form onSubmit={handleJoin} className="input-with-btn-container">
+                <input
+                    type="text"
+                    className="big-input"
+                    name="username"
                     placeholder="your name..."
-                    onChange={updateUsername} 
+                    onChange={updateUsername}
                     value={username} />
-                <button className="big-btn btn-on-input" name="" onClick={handleJoin}>join</button>
-            </div>
+                <button className="big-btn btn-on-input" name="join">join</button>
+            </form>
         </main>
     )
 }
