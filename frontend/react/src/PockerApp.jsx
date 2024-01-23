@@ -40,8 +40,7 @@ export default function PockerApp() {
                     addError('no such session')
                     navigate('/')
                 } else {
-                    addError(error)
-                    console.log(error)
+                    addError(error.message + ': ' + error.response.statusText)
                 }
             })
     }
