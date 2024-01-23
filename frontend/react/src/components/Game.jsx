@@ -9,7 +9,7 @@ import Stats from './Stats'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 
 export default function Game({ wsURL, sessionId, onError }) {
-    const [participants, setParticipants] = useState([]) 
+    const [participants, setParticipants] = useState([])
     const [votesHidden, setVotesHidden] = useState(true)
 
     console.log('WS url: ', wsURL)
@@ -28,8 +28,8 @@ export default function Game({ wsURL, sessionId, onError }) {
     useEffect(() => {
         console.log('new message', lastJsonMessage)
         setParticipants(lastJsonMessage?.votes_info)
-        if (lastJsonMessage?.votes_hidden !== votesHidden) {
-            setVotesHidden(!votesHidden)
+        if (lastJsonMessage?.votes_hidden !== votesHidden && lastJsonMessage?.votes_hidden !== undefined) {
+            setVotesHidden(lastJsonMessage?.votes_hidden)
         }
     }, [lastJsonMessage])
 
@@ -40,9 +40,9 @@ export default function Game({ wsURL, sessionId, onError }) {
                 <Stats />
                 {votesHidden ? <ScoreButtons /> : <Result />}
                 <ControlButtons isHidden={votesHidden} />
-                <CopyLinkButton sessionId={sessionId}/>
+                <CopyLinkButton sessionId={sessionId} />
             </main>
-            <Participants list={participants}/>
+            <Participants list={participants} />
         </>
     )
 }
