@@ -20,7 +20,7 @@ export default function Participants({ list }) {
     return (
         <aside className="participants">
             <div className="title">
-                <div className="progressbar" style={{width: progress + '%'}}></div>
+                <div className="progressbar" style={{ width: progress + '%' }}></div>
             </div>
             <Collapsible
                 wrapperId="collapsible-participants-list"
@@ -30,9 +30,10 @@ export default function Participants({ list }) {
             >
                 {list?.map((person, i) => {
                     return (
-                        <li className="participant" key={i}>
+                        <li className={`participant ${person.is_current_user ? 'current' : ''}`} key={i}>
                             <span className={person.is_voted ? "vote-indicator voted" : "vote-indicator"}></span>
                             <span className="participant-name">{person.name}
+                                {person.is_current_user ? ' ' : null}
                                 {person.is_current_user ? <IconCrown /> : null}
                             </span>
                             <span className="result">{person.vote}</span>

@@ -199,6 +199,11 @@ input:focus {
     padding: 0 0.4rem;
 }
 
+.submitted input:invalid {
+    border-color: var(--error-red);
+    color: var(--error-red);
+}
+
 .btn-on-input {
     position: relative;
     left: -0.7rem;
@@ -294,6 +299,10 @@ input:focus {
     padding-right: 0.5rem;
 }
 
+.current {
+    background-color: var(--primary-color-transparent-15);
+}
+
 .vote-indicator {
     width: 0.6rem;
     height: 0.6rem;
@@ -305,12 +314,6 @@ input:focus {
 .voted {
     background-color: var(--vote-indicator-voted);
     box-shadow: 0 0 0.3rem 0.2rem var(--vote-indicator-shadow);
-}
-
-/* TODO delete later: it's here just for testing the transition */
-.vote-indicator:hover {
-    background-color: var(--vote-indicator-voted);
-    box-shadow: 0 0 0.3rem 0.1rem var(--vote-indicator-shadow);
 }
 
 .participant-name {
@@ -345,6 +348,12 @@ input:focus {
     border-radius: var(--border-radius);
     padding: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.validation-message {
+    color: var(--error-red);
+    font-size: 0.9rem;
+    padding: 0.5rem 0rem;
 }
 
 .progressbar {
@@ -454,7 +463,8 @@ input:focus {
         background-color: var(--background);
         border: 0.1rem solid var(--secondary-color);
         border-radius: var(--border-radius);
-        height: calc(95vh - 2.6rem);
+        /* height: calc(95vh - 2.6rem); */
+        height: min-content;
         cursor: text;
     }
 
@@ -464,7 +474,7 @@ input:focus {
     }
 
     .participant-name {
-        font-size: 0.6rem;
+        font-size: 1rem;
         padding-left: 0.4rem;
         min-width: 12rem;
         max-width: 12rem;
