@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Form from './Form'
 
 export default function CreateForm({ onCreate, onJoin }) {
