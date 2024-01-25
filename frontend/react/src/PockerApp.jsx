@@ -22,6 +22,7 @@ export default function PockerApp() {
         axios.post(createSessionUrl)
             .then((response) => {
                 setSessionId(response.data.id)
+                navigate('/' + response.data.id)
             })
             .catch((error) => {
                 addError(error)
