@@ -316,7 +316,7 @@ input:focus {
 
 .voted {
     background-color: var(--vote-indicator-voted);
-    box-shadow: 0 0 0.3rem 0.2rem var(--vote-indicator-shadow);
+    box-shadow: 0 0 0.2rem 0.2rem var(--vote-indicator-shadow);
 }
 
 .participant-name {

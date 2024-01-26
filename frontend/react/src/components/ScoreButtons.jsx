@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-
-const mountainGoat = ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?']
+import { mountainGoat } from './CardPacks'
 
 export default function ScoreButtons({ onVote }) {
     const [currentVote, setCurrentVote] = useState(null)
-    const buttonList = mountainGoat
+    const buttonList = mountainGoat.cards
+
     const handleClick = (e) => {
         setCurrentVote(e.target.innerText)
     }
