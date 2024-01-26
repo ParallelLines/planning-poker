@@ -68,6 +68,7 @@ export default function PockerApp() {
         if (newError.message) {
             if (newError.response.status === 404) {
                 setSessionId(null)
+                setUserId(null)
                 errorText = 'no such session :('
                 navigate('/')
             } else {
@@ -88,19 +89,12 @@ export default function PockerApp() {
         if (sid.length) joinSession(sid)
     }, [location])
 
-    let content
-    if (!sessionId) {
-        content = <CreateForm onCreate={createSession} onJoin={joinSession} />
-    } else if (sessionId && !userId) {
-        content = <JoinForm onJoin={createUser} />
-    } else if (userId) {
-        content = <Game sessionId={sessionId} userId={userId} onError={addError} />
-    }
-
     return (
         <>
             <Header />
-            {content}
+            {!sessionId && <CreateForm onCreate={createSession} onJoin={joinSession} />}
+            {sessionId && !userId && <JoinForm onJoin={createUser} />}
+            {userId && <Game sessionId={sessionId} userId={userId} onError={addError} />}
             <div className="error-container">
                 {errorQueue.map((err, idx) => (
                     <ErrorMessage key={idx} message={err} onRemove={removeError} />

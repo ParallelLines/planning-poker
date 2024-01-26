@@ -8,6 +8,7 @@ import Settings from './Settings'
 import Stats from './Stats'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 import axios from 'axios'
+import { mountainGoat } from './CardPacks'
 
 const BACKEND_URL = 'https://romangaranin.net/pc/api'
 
@@ -54,6 +55,11 @@ export default function Game({ sessionId, userId, onError }) {
             })
     }
 
+    const countAverage = () => {
+        const votes = participants ? participants.map(p => p.vote) : []
+        return mountainGoat.average(votes)
+    }
+
     useEffect(() => {
         console.log(readyState)
     }, [readyState])
@@ -70,7 +76,10 @@ export default function Game({ sessionId, userId, onError }) {
         <>
             <Settings />
             <main>
-                <Stats />
+                <Stats
+                    score={countAverage()}
+                    isHidden={votesHidden}
+                />
                 {votesHidden ? <ScoreButtons onVote={vote} /> : <Result />}
                 <ControlButtons
                     isHidden={votesHidden}
