@@ -4,7 +4,7 @@ import IconCross from './IconCross'
 import IconCrown from './IconCrown'
 import Collapsible from './Collapsible'
 
-export default function Participants({ list }) {
+export default function Participants({ list, isHidden }) {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 705)
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export default function Participants({ list }) {
                                 {person.is_current_user ? ' ' : null}
                                 {person.is_current_user ? <IconCrown /> : null}
                             </span>
-                            <span className="result">{person.vote}</span>
+                            <span className="result">{isHidden ? '...' : person.vote}</span>
                         </li>
                     )
                 })}

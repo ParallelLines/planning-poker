@@ -12,7 +12,6 @@ const BACKEND_URL = 'https://romangaranin.net/pc/api'
 export default function PockerApp() {
     const [sessionId, setSessionId] = useState(null)
     const [userId, setUserId] = useState(null)
-    const [wsURL, setWsUrl] = useState(null)
     const [errorQueue, setErrorQueue] = useState([])
     const navigate = useNavigate()
     const location = useLocation()
@@ -26,7 +25,6 @@ export default function PockerApp() {
             })
             .catch((error) => {
                 addError(error)
-                console.log(error)
             })
     }
 
@@ -41,7 +39,7 @@ export default function PockerApp() {
                     addError('no such session')
                     navigate('/')
                 } else {
-                    addError(error.message + ': ' + error.response.statusText)
+                    addError(error)
                 }
             })
     }
@@ -51,13 +49,6 @@ export default function PockerApp() {
         axios.post(joinSessionUrl, JSON.stringify({ name: username }))
             .then((response) => {
                 setUserId(response.data.id)
-
-                const newWsUrl = BACKEND_URL
-                    .replaceAll('https://', 'wss://')
-                    .replaceAll('http://', 'ws://')
-                    + '/sessions/' + sessionId + '/get/' + response.data.id
-                setWsUrl(newWsUrl)
-
                 navigate('/' + sessionId)
             })
             .catch((error) => {
@@ -68,13 +59,18 @@ export default function PockerApp() {
                     navigate('/')
                 } else {
                     addError(error)
-                    console.log(error)
                 }
             })
     }
 
     const addError = (newError) => {
-        setErrorQueue(prev => [...prev, newError])
+        let errorText
+        if (newError.message) {
+            errorText = newError.message + ': ' + newError.response.statusText
+        } else {
+            errorText = newError
+        }
+        setErrorQueue(prev => [...prev, errorText])
     }
 
     const removeError = () => {
@@ -91,9 +87,8 @@ export default function PockerApp() {
         content = <CreateForm onCreate={createSession} onJoin={joinSession} />
     } else if (sessionId && !userId) {
         content = <JoinForm onJoin={createUser} />
-    } else if (wsURL) {
-        console.log(wsURL)
-        content = <Game wsURL={wsURL} sessionId={sessionId} onError={addError} />
+    } else if (userId) {
+        content = <Game sessionId={sessionId} userId={userId} onError={addError} />
     }
 
     return (

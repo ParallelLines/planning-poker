@@ -7,12 +7,18 @@ import ScoreButtons from './ScoreButtons'
 import Settings from './Settings'
 import Stats from './Stats'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
+import axios from 'axios'
 
-export default function Game({ wsURL, sessionId, onError }) {
+const BACKEND_URL = 'https://romangaranin.net/pc/api'
+
+export default function Game({ sessionId, userId, onError }) {
     const [participants, setParticipants] = useState([])
     const [votesHidden, setVotesHidden] = useState(true)
 
-    console.log('WS url: ', wsURL)
+    const wsURL = BACKEND_URL
+        .replaceAll('https://', 'wss://')
+        .replaceAll('http://', 'ws://')
+        + '/sessions/' + sessionId + '/get/' + userId
     const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
         wsURL,
         {
@@ -20,6 +26,33 @@ export default function Game({ wsURL, sessionId, onError }) {
             shouldReconnect: () => true
         }
     )
+
+    const vote = (vote) => {
+        const voteUrl = BACKEND_URL + '/sessions/' + sessionId + '/vote'
+        axios.post(voteUrl, JSON.stringify({
+            user_id: userId,
+            vote: parseFloat(vote)
+        }))
+            .catch(error => {
+                onError(error)
+            })
+    }
+
+    const showVotes = () => {
+        const voteUrl = BACKEND_URL + '/sessions/' + sessionId + '/show'
+        axios.post(voteUrl, JSON.stringify({ user_id: userId }))
+            .catch(error => {
+                onError(error)
+            })
+    }
+
+    const clearVotes = () => {
+        const voteUrl = BACKEND_URL + '/sessions/' + sessionId + '/clear'
+        axios.post(voteUrl, JSON.stringify({ user_id: userId }))
+            .catch(error => {
+                onError(error)
+            })
+    }
 
     useEffect(() => {
         console.log(readyState)
@@ -38,11 +71,15 @@ export default function Game({ wsURL, sessionId, onError }) {
             <Settings />
             <main>
                 <Stats />
-                {votesHidden ? <ScoreButtons /> : <Result />}
-                <ControlButtons isHidden={votesHidden} />
+                {votesHidden ? <ScoreButtons onVote={vote} /> : <Result />}
+                <ControlButtons
+                    isHidden={votesHidden}
+                    onReveal={showVotes}
+                    onStart={clearVotes}
+                />
                 <CopyLinkButton sessionId={sessionId} />
             </main>
-            <Participants list={participants} />
+            <Participants list={participants} isHidden={votesHidden} />
         </>
     )
 }
