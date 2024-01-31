@@ -2,7 +2,6 @@ import { PieChart } from 'react-minimal-pie-chart'
 import { pastel } from './ColorPalletes'
 
 export default function Result({ votes }) {
-    console.log(votes)
     const noVoteStr = '😴'
 
     const data = votes.reduce((acc, curr) => {
