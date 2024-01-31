@@ -1,10 +1,11 @@
 import AverageScore from "./AverageScore";
+import Stopwatch from "./Stopwatch";
 
 export default function Stats({ score, isHidden }) {
     return (
         <div className="stats">
             <AverageScore score={isHidden ? '...' : score} />
-            <time dateTime="PT15M43S">00:00</time>
+            {/* <Stopwatch start={isHidden} /> */}
         </div>
     )
 }
