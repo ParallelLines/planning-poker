@@ -10,7 +10,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket'
 import axios from 'axios'
 import { mountainGoat } from './CardPacks'
 
-const BACKEND_URL = 'https://romangaranin.net/pc/api'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 export default function Game({ sessionId, userId, onError }) {
     const [participants, setParticipants] = useState([])

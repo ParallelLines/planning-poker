@@ -7,7 +7,7 @@ import JoinForm from './components/JoinForm'
 import { useNavigate, useLocation } from 'react-router-dom'
 import ErrorMessage from './components/ErrorMessage'
 
-const BACKEND_URL = 'https://romangaranin.net/pc/api'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 export default function PockerApp() {
     const [sessionId, setSessionId] = useState(null)
