@@ -161,7 +161,7 @@ input:focus {
 
 text {
     fill: var(--background);
-    font-size: 0.5rem;
+    font-size: 0.4rem;
 }
 
 .poker-btn {

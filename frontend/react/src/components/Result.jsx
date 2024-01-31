@@ -26,7 +26,7 @@ export default function Result({ votes }) {
         <div className="pi-chart">
             <PieChart
                 data={data}
-                label={data => data.dataEntry.title}
+                label={data => data.dataEntry.title + ' (' + data.dataEntry.value + ')'}
                 labelPosition={70}
                 animate
                 animationDuration={400}
