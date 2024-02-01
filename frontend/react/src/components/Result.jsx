@@ -31,6 +31,8 @@ export default function Result({ votes }) {
                 animationDuration={400}
                 animationEasing="ease-out"
                 startAngle={90}
+                segmentsShift={0.5}
+                radius={49}
             />
         </div>
     )

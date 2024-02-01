@@ -1,2 +1,2 @@
 export const pastel = ['#d38cff', '#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#9550f5', '#e7ffce', '#feffa3', '#caffef', '#ffe5c5', '#dfffc6']
-export const darkOne = ['#E06C75', '#98C379', '#E5C07B', '#61AFEF', '#C678DD', '#568602', '#ABB2BF', '#282C34']
+export const darkOne = ['#C678DD', '#E06C75', '#98C379', '#E5C07B', '#61AFEF', '#BE5046', '#568602', '#8B8000', '#673147', '#867365', '#6200EE', '#ABB2BF']

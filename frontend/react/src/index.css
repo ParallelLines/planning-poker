@@ -161,7 +161,7 @@ input:focus {
 
 text {
     fill: var(--background);
-    font-size: 0.4rem;
+    font-size: 0.3rem;
 }
 
 .poker-btn {
@@ -474,6 +474,7 @@ text {
         /* height: calc(95vh - 2.6rem); */
         height: min-content;
         cursor: text;
+        padding: 0.3rem 0;
     }
 
     .participant {
