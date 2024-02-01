@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react"
 import { mountainGoat } from './CardPacks'
 
-export default function ScoreButtons({ onVote }) {
-    const [currentVote, setCurrentVote] = useState(null)
+export default function ScoreButtons({ onVote, currentUser }) {
     const buttonList = mountainGoat.cards
+    const currentVote = currentUser && currentUser.vote ? currentUser.vote.toString() : null
 
     const handleClick = (e) => {
-        setCurrentVote(e.target.innerText)
+        onVote(e.target.innerText)
     }
 
-    useEffect(() => {
-        if (currentVote !== null) {
-            onVote(currentVote)
-        }
-    }, [currentVote])
     return (
         <div className="poker-btns">
             {buttonList.map((button, i) => (

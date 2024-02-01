@@ -80,7 +80,14 @@ export default function Game({ sessionId, userId, onError }) {
                     score={countAverage()}
                     isHidden={votesHidden}
                 />
-                {votesHidden ? <ScoreButtons onVote={vote} /> : <Result votes={participants?.map(p => p.vote)} />}
+                {
+                    votesHidden ?
+                        <ScoreButtons
+                            onVote={vote}
+                            currentUser={participants?.filter(p => p.is_current_user)[0]}
+                        /> :
+                        <Result votes={participants?.map(p => p.vote)} />
+                }
                 <ControlButtons
                     isHidden={votesHidden}
                     onReveal={showVotes}
