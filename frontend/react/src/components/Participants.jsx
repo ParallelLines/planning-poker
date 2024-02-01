@@ -36,7 +36,7 @@ export default function Participants({ list, isHidden }) {
                                 {person.is_current_user ? ' ' : null}
                                 {person.is_current_user ? <IconCrown /> : null}
                             </span>
-                            <span className="result">{isHidden ? '...' : person.vote}</span>
+                            <span className="result">{isHidden && person.is_voted ? '...' : person.vote}</span>
                         </li>
                     )
                 })}

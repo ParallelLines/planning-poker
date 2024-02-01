@@ -10,7 +10,6 @@ export default function CopyLinkButton({ sessionId }) {
         // gsap.timeline()
         //     .to(copiedMsg.current, {opacity: 1, duration: 0.01})
         //     .to(copiedMsg.current, {opacity: 0, scale: 2, duration: 1})
-        console.log('link copied! :)')
     }
 
     return (

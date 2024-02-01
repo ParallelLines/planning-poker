@@ -1,5 +1,5 @@
 import { PieChart } from 'react-minimal-pie-chart'
-import { pastel } from './ColorPalletes'
+import { pastel, darkOne } from './ColorPalletes'
 
 export default function Result({ votes }) {
     const noVoteStr = '😴'
@@ -14,7 +14,7 @@ export default function Result({ votes }) {
             }
         }
         if (!found) {
-            acc.push({ title: curr === null ? noVoteStr : curr, value: 1, color: pastel[acc.length] })
+            acc.push({ title: curr === null ? noVoteStr : curr, value: 1, color: darkOne[acc.length] })
         }
         return acc
     }, [])
