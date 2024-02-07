@@ -32,6 +32,7 @@ export default function Form({ onSubmit, errorMessage, ...params }) {
                 onChange={updateValue}
                 value={value}
                 {...params}
+                autoFocus
             />
             <button className="big-btn btn-on-input" name="Join session">join</button>
             {!isValid && <div className="validation-message">{errorMessage}</div>}
