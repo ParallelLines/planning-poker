@@ -8,7 +8,7 @@ const standartAverage = (list) => {
         }
         return acc
     }, { sum: 0, qty: 0 })
-    if (result.qty === 0) return '?'
+    if (result.qty === 0) return 'zzZ'
     return (result.sum / result.qty).toFixed(1)
 }
 
