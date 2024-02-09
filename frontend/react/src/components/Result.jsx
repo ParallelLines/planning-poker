@@ -1,8 +1,9 @@
 import { PieChart } from 'react-minimal-pie-chart'
-import { deprogram, muted } from './ColorPalletes'
+import { deprogram, muted, darkOne } from './ColorPalletes'
 
 export default function Result({ votes }) {
     const noVoteStr = '😴'
+    const colorPalette = darkOne
 
     const data = votes.reduce((acc, curr) => {
         let found = false
@@ -14,7 +15,7 @@ export default function Result({ votes }) {
             }
         }
         if (!found) {
-            acc.push({ title: curr === null ? noVoteStr : curr, value: 1, color: deprogram[acc.length] })
+            acc.push({ title: curr === null ? noVoteStr : curr, value: 1, color: colorPalette[acc.length] })
         }
         return acc
     }, [])
