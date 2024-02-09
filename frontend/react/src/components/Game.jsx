@@ -74,7 +74,7 @@ export default function Game({ sessionId, userId, onError }) {
 
     return (
         <>
-            <Settings />
+            {/* <Settings /> */}
             <main>
                 <Stats
                     score={countAverage()}
