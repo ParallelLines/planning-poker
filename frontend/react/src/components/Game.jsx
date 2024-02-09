@@ -60,12 +60,11 @@ export default function Game({ sessionId, userId, onError }) {
         return mountainGoat.average(votes)
     }
 
-    useEffect(() => {
-        console.log(readyState)
-    }, [readyState])
+    // useEffect(() => {
+    //     console.log(readyState)
+    // }, [readyState])
 
     useEffect(() => {
-        console.log('new message', lastJsonMessage)
         setParticipants(lastJsonMessage?.votes_info)
         if (lastJsonMessage?.votes_hidden !== votesHidden && lastJsonMessage?.votes_hidden !== undefined) {
             setVotesHidden(lastJsonMessage?.votes_hidden)
