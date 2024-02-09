@@ -35,12 +35,7 @@ export default function PockerApp() {
                 setSessionId(sid)
             })
             .catch((error) => {
-                if (error.response.status === 404) {
-                    addError('no such session')
-                    navigate('/')
-                } else {
-                    addError(error)
-                }
+                addError(error)
             })
     }
 
@@ -52,14 +47,7 @@ export default function PockerApp() {
                 navigate('/' + sessionId)
             })
             .catch((error) => {
-                if (error.response.status === 404) {
-                    setSessionId(null)
-                    setWsUrl(null)
-                    addError('no such session :(')
-                    navigate('/')
-                } else {
-                    addError(error)
-                }
+                addError(error)
             })
     }
 
