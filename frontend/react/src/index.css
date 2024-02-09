@@ -348,14 +348,22 @@ text {
 
 .error-container {
     grid-area: errors;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .error-message {
+    display: inline-block;
     color: var(--error-red);
     border: 0.1rem solid var(--error-red);
     border-radius: var(--border-radius);
     padding: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.error-page {
+    grid-area: main;
 }
 
 .validation-message {
