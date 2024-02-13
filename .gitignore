@@ -1,3 +1,6 @@
+# vite build dir
+dist/
+
 # Logs
 logs
 *.log
