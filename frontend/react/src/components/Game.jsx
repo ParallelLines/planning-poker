@@ -23,7 +23,7 @@ export default function Game({ sessionId, userId, onError }) {
     const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
         wsURL,
         {
-            onOpen: () => console.log('WS connection established'),
+            // onOpen: () => console.log('WS connection established'),
             shouldReconnect: () => true
         }
     )
