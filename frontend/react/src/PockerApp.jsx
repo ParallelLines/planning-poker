@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import ErrorMessage from './components/ErrorMessage'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+const FRONTEND_FOLDER = import.meta.env.VITE_FRONTEND_FOLDER
 
 export default function PockerApp() {
     const [sessionId, setSessionId] = useState(null)
@@ -21,7 +22,8 @@ export default function PockerApp() {
         axios.post(createSessionUrl)
             .then((response) => {
                 setSessionId(response.data.id)
-                navigate('/' + response.data.id)
+                const path = FRONTEND_FOLDER.length ? '/' + FRONTEND_FOLDER + '/' + response.data.id : '/' + response.data.id
+                navigate(path)
             })
             .catch((error) => {
                 addError(error)
@@ -44,7 +46,8 @@ export default function PockerApp() {
         axios.post(joinSessionUrl, JSON.stringify({ name: username }))
             .then((response) => {
                 setUserId(response.data.id)
-                navigate('/' + sessionId)
+                const path = FRONTEND_FOLDER.length ? '/' + FRONTEND_FOLDER + '/' + sessionId : '/' + sessionId
+                navigate(path)
             })
             .catch((error) => {
                 addError(error)
@@ -59,12 +62,12 @@ export default function PockerApp() {
                 setSessionId(null)
                 setUserId(null)
                 errorText = 'no such session :('
-                navigate('/')
+                navigate('/' + FRONTEND_FOLDER)
             } else if (status === 400) {
                 setSessionId(null)
                 setUserId(null)
                 errorText = 'server says it\'s a weird request'
-                navigate('/')
+                navigate('/' + FRONTEND_FOLDER)
             }
             else {
                 errorText = newError.message + ': ' + newError.response.statusText
@@ -80,7 +83,8 @@ export default function PockerApp() {
     }
 
     useEffect(() => {
-        const sid = location.pathname.slice(1)
+        const numToSlice = FRONTEND_FOLDER.length ? FRONTEND_FOLDER.length + 2 : 1
+        const sid = location.pathname.slice(numToSlice)
         if (sid.length) joinSession(sid)
     }, [location])
 
