@@ -19,6 +19,10 @@ export default function PockerApp() {
     const location = useLocation()
     const [cookies, setCookie] = useCookies(['planningCat_name'])
 
+    const today = new Date()
+    const inAYear = new Date()
+    inAYear.setFullYear(today.getFullYear() + 1)
+
     const createSession = () => {
         const createSessionUrl = BACKEND_URL + '/sessions'
         axios.post(createSessionUrl)
@@ -45,7 +49,7 @@ export default function PockerApp() {
 
     const createUser = (username) => {
         if (cookies.planningCat_name !== username) {
-            setCookie('planningCat_name', username)
+            setCookie('planningCat_name', username, { expires: inAYear })
         }
         const joinSessionUrl = BACKEND_URL + '/sessions/' + sessionId + '/join'
         axios.post(joinSessionUrl, JSON.stringify({ name: username }))
