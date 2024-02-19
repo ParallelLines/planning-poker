@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import JoinForm from './components/JoinForm'
 import { useNavigate, useLocation } from 'react-router-dom'
 import ErrorMessage from './components/ErrorMessage'
+import { useCookies } from 'react-cookie'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 const FRONTEND_FOLDER = import.meta.env.VITE_FRONTEND_FOLDER
@@ -16,6 +17,7 @@ export default function PockerApp() {
     const [errorQueue, setErrorQueue] = useState([])
     const navigate = useNavigate()
     const location = useLocation()
+    const [cookies, setCookie] = useCookies(['planningCat_name'])
 
     const createSession = () => {
         const createSessionUrl = BACKEND_URL + '/sessions'
@@ -42,6 +44,9 @@ export default function PockerApp() {
     }
 
     const createUser = (username) => {
+        if (cookies.planningCat_name !== username) {
+            setCookie('planningCat_name', username)
+        }
         const joinSessionUrl = BACKEND_URL + '/sessions/' + sessionId + '/join'
         axios.post(joinSessionUrl, JSON.stringify({ name: username }))
             .then((response) => {
@@ -92,7 +97,7 @@ export default function PockerApp() {
         <>
             <Header />
             {!sessionId && <CreateForm onCreate={createSession} onJoin={joinSession} />}
-            {sessionId && !userId && <JoinForm onJoin={createUser} />}
+            {sessionId && !userId && <JoinForm onJoin={createUser} cookieValue={cookies.planningCat_name} />}
             {userId && <Game sessionId={sessionId} userId={userId} onError={addError} />}
             <div className="error-container">
                 {errorQueue.map((err, idx) => (

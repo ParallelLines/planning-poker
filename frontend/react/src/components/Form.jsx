@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-export default function Form({ onSubmit, errorMessage, ...params }) {
-    const [value, setValue] = useState('')
+export default function Form({ onSubmit, errorMessage, cookieValue, ...params }) {
+    const [value, setValue] = useState(cookieValue)
     const [submitted, setSubmitted] = useState(false)
     const [isValid, setIsValid] = useState(true)
 

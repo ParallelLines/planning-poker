@@ -1,6 +1,6 @@
 import Form from './Form'
 
-export default function JoinForm({ onJoin }) {
+export default function JoinForm({ onJoin, cookieValue = '' }) {
     return (
         <main>
             <Form
@@ -11,6 +11,7 @@ export default function JoinForm({ onJoin }) {
                 required
                 minLength={1}
                 maxLength={20}
+                cookieValue={cookieValue}
             />
         </main>
     )
