@@ -35,6 +35,7 @@ export default function Game({ sessionId, userId, onError }) {
             vote: parseFloat(vote)
         }))
             .catch(error => {
+                console.log('error while trying to vote: ', error)
                 onError(error)
             })
     }
