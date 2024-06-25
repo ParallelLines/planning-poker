@@ -3,9 +3,12 @@ import { mountainGoat } from './CardPacks'
 
 export default function ScoreButtons({ onVote, currentUser }) {
     const buttonList = mountainGoat.cards
-    const currentVote = currentUser && currentUser.is_voted ? currentUser.vote.toString() : null
-    const handleClick = (e) => {
-        onVote(e.target.innerText)
+    // const currentVote = currentUser && currentUser.is_voted ? currentUser.vote.toString() : null
+    const [currentVote, setCurrentVote] = useState(currentUser && currentUser.is_voted ? currentUser.vote.toString() : null)
+    const handleClick = async (e) => {
+        console.log(`setting new button ${e.target.innerText}`)
+        setCurrentVote(e.target.innerText)
+        await onVote(e.target.innerText)
     }
 
     return (

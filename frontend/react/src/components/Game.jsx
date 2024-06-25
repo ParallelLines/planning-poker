@@ -28,29 +28,30 @@ export default function Game({ sessionId, userId, onError }) {
         }
     )
 
-    const vote = (vote) => {
+    const vote = async (vote) => {
         const voteUrl = BACKEND_URL + '/sessions/' + sessionId + '/vote'
-        axios.post(voteUrl, JSON.stringify({
+        await axios.post(voteUrl, JSON.stringify({
             user_id: userId,
             vote: parseFloat(vote)
         }))
+            .then(console.log(`new vote ${vote} successfully sent`))
             .catch(error => {
                 console.log('error while trying to vote: ', error)
                 onError(error)
             })
     }
 
-    const showVotes = () => {
+    const showVotes = async () => {
         const voteUrl = BACKEND_URL + '/sessions/' + sessionId + '/show'
-        axios.post(voteUrl, JSON.stringify({ user_id: userId }))
+        await axios.post(voteUrl, JSON.stringify({ user_id: userId }))
             .catch(error => {
                 onError(error)
             })
     }
 
-    const clearVotes = () => {
+    const clearVotes = async () => {
         const voteUrl = BACKEND_URL + '/sessions/' + sessionId + '/clear'
-        axios.post(voteUrl, JSON.stringify({ user_id: userId }))
+        await axios.post(voteUrl, JSON.stringify({ user_id: userId }))
             .catch(error => {
                 onError(error)
             })
