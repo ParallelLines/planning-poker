@@ -99,6 +99,10 @@ aside.participants {
     color: var(--primary-color-transparent-50);
 }
 
+.input-with-btn-container {
+    display: flex;
+}
+
 button,
 input {
     font-family: inherit;
