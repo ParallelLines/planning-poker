@@ -32,9 +32,8 @@ export default function Participants({ list, isHidden }) {
                     return (
                         <li className={`participant ${person.is_current_user ? 'current' : ''}`} key={i}>
                             <span className={person.is_voted ? "vote-indicator voted" : "vote-indicator"}></span>
-                            <span className="participant-name">{person.name}
-                                {person.is_current_user ? ' ' : null}
-                                {person.is_current_user ? <IconCrown /> : null}
+                            <span className="participant-name">
+                                {person.name}
                             </span>
                             <span className="result">{isHidden && person.is_voted ? '...' : person.vote}</span>
                         </li>
