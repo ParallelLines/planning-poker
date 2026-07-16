@@ -99,6 +99,13 @@ aside.participants {
     color: var(--primary-color-transparent-50);
 }
 
+.form-with-btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .input-with-btn-container {
     display: flex;
 }

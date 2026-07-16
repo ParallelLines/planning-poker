@@ -20,22 +20,24 @@ export default function Form({ onSubmit, errorMessage, cookieValue, ...params })
     }
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className={`input-with-btn-container ${submitted ? 'submitted' : ''}`}
-            noValidate
-        >
-            <input
-                type="text"
-                className="big-input"
-                name="sessionId"
-                onChange={updateValue}
-                value={value}
-                {...params}
-                autoFocus
-            />
-            <button className="big-btn btn-on-input" name="Join session">join</button>
+        <div className='form-with-btn-container'>
+            <form
+                onSubmit={handleSubmit}
+                className={`input-with-btn-container ${submitted ? 'submitted' : ''}`}
+                noValidate
+            >
+                <input
+                    type="text"
+                    className="big-input"
+                    name="sessionId"
+                    onChange={updateValue}
+                    value={value}
+                    {...params}
+                    autoFocus
+                />
+                <button className="big-btn btn-on-input" name="Join session">join</button>
+            </form>
             {!isValid && <div className="validation-message">{errorMessage}</div>}
-        </form>
+        </div>
     )
 }
