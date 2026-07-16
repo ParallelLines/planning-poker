@@ -127,6 +127,17 @@ button:active {
     color: var(--primary-color-more-lighted);
 }
 
+button:disabled {
+    color: var(--primary-color-transparent-25);
+    background-color: var(--primary-color-transparent-15);
+    border-color: var(--primary-color-transparent-25);
+    cursor: default;
+}
+
+button:disabled:active {
+    box-shadow: none;
+}
+
 input[type=text] {
     cursor: text;
     background-color: transparent;
@@ -194,7 +205,9 @@ text {
 
 .control-btns {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    gap: 0.5rem;
 }
 
 .usual-btn,

@@ -15,7 +15,7 @@ export default function CopyLinkButton({ sessionId }) {
     return (
         <div className="copy-link">
             {/* <span ref={copiedMsg}>copied!</span> */}
-            <button id="copy-link-btn" className="svg-btn" name="copy link" onClick={copyLinkToClip}>
+            <button id="copy-link-btn" className="svg-btn" name="copy link" onClick={copyLinkToClip} title="copy link">
                 <IconCopy />
             </button>
             <label htmlFor="copy-link-btn">session id {sessionId}</label>
