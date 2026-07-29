@@ -66,20 +66,24 @@ export default function PockerApp() {
     const addError = (newError) => {
         let errorText
         if (newError.message) {
-            const status = newError.response.status
-            if (status === 404) {
-                setSessionId(null)
-                setUserId(null)
-                errorText = 'no such session :('
-                navigate('/' + FRONTEND_FOLDER)
-            } else if (status === 400) {
-                setSessionId(null)
-                setUserId(null)
-                errorText = 'server says it\'s a weird request'
-                navigate('/' + FRONTEND_FOLDER)
-            }
-            else {
-                errorText = newError.message + ': ' + newError.response.statusText
+            if (newError.response) {
+                const status = newError.response.status
+                if (status === 404) {
+                    setSessionId(null)
+                    setUserId(null)
+                    errorText = 'no such session :('
+                    navigate('/' + FRONTEND_FOLDER)
+                } else if (status === 400) {
+                    setSessionId(null)
+                    setUserId(null)
+                    errorText = 'server says it\'s a weird request'
+                    navigate('/' + FRONTEND_FOLDER)
+                }
+                else {
+                    errorText = newError.message + ': ' + newError.response.statusText
+                }
+            } else {
+                errorText = newError.message
             }
         } else {
             errorText = newError
