@@ -24,7 +24,15 @@ export default function Game({ sessionId, userId, onError }) {
         wsURL,
         {
             // onOpen: () => console.log('WS connection established'),
-            shouldReconnect: () => true
+            shouldReconnect: (closeEvent) => true,
+            reconnectAttempts: 20,
+            reconnectInterval: (attempt) => Math.min(2 ** attempt * 1000, 10000),
+            //heartbeat: {
+            //    message: 'ping',
+            //    returnMessage: 'pong',
+            //    timeout: 30000,   // consider dead if no pong in 30s
+            //    interval: 15000,  // ping every 15s
+            //},
         }
     )
 
@@ -32,9 +40,8 @@ export default function Game({ sessionId, userId, onError }) {
         const voteUrl = BACKEND_URL + '/sessions/' + sessionId + '/vote'
         await axios.post(voteUrl, JSON.stringify({
             user_id: userId,
-            vote: parseFloat(vote)
+            vote: vote
         }))
-            .then(console.log(`new vote ${vote} successfully sent`))
             .catch(error => {
                 console.log('error while trying to vote: ', error)
                 onError(error)

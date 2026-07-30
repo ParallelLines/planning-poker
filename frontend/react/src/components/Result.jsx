@@ -4,18 +4,17 @@ import { deprogram, muted, darkOne } from './ColorPalletes'
 export default function Result({ votes }) {
     const noVoteStr = '😴'
     const colorPalette = darkOne
-
     const data = votes.reduce((acc, curr) => {
         let found = false
         for (let obj of acc) {
-            if (obj.title === curr || (curr === null && obj.title === noVoteStr)) {
+            if (obj.title === curr || (curr === '' && obj.title === noVoteStr)) {
                 found = true
                 obj.value += 1
                 break
             }
         }
         if (!found) {
-            acc.push({ title: curr === null ? noVoteStr : curr, value: 1, color: colorPalette[acc.length] })
+            acc.push({ title: curr === '' ? noVoteStr : curr, value: 1, color: colorPalette[acc.length] })
         }
         return acc
     }, [])

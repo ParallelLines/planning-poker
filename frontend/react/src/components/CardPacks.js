@@ -4,10 +4,13 @@ const standartAverage = (list) => {
         if (!Number.isNaN(sum)) {
             acc.sum += sum
             acc.qty += 1
-            return acc
+        } else {
+            if (!curr.length) acc.noVote += 1
+            if (curr === '?') acc.question += 1
         }
         return acc
-    }, { sum: 0, qty: 0 })
+    }, { sum: 0, qty: 0, question: 0, noVote: 0 })
+    if (result.qty === 0 && result.question > 0) return '...no idea'
     if (result.qty === 0) return 'zzZ'
     return (result.sum / result.qty).toFixed(1)
 }
