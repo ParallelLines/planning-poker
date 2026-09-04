@@ -4,11 +4,14 @@ import './index.css'
 import PockerApp from './PockerApp'
 import { BrowserRouter } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
+import { AppContext } from './helpers/AppContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <CookiesProvider defaultSetOptions={{ path: '/' }}>
     <BrowserRouter>
-      <PockerApp />
+      <AppContext>
+        <PockerApp />
+      </AppContext>
     </BrowserRouter>
   </CookiesProvider>,
 )

@@ -1,99 +1,177 @@
 import Game from './components/Game'
 import Header from './components/Header'
-import axios from 'axios'
 import CreateForm from './components/CreateForm'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import JoinForm from './components/JoinForm'
 import { useNavigate, useLocation } from 'react-router-dom'
-import ErrorMessage from './components/ErrorMessage'
 import { useCookies } from 'react-cookie'
+import ErrorQueue from './components/ErrorQueue'
+import { useErrorQueue } from './helpers/AppContext'
+import { ReadyState } from 'react-use-websocket'
+import Loader from './components/Loader'
+import { mountainGoat } from './components/CardPacks'
+import { createSessionAPI } from './helpers/sessionApi'
+import { useSessionSocket } from './helpers/useSessionSocket'
+import { useSessionErrors } from './helpers/useSessionErrors'
+import { useRetryableAction } from './helpers/useRetryableAction'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 const FRONTEND_FOLDER = import.meta.env.VITE_FRONTEND_FOLDER
 
+const sessionApi = createSessionAPI(BACKEND_URL)
+
 export default function PockerApp() {
-    const [sessionId, setSessionId] = useState(null)
-    const [userId, setUserId] = useState(null)
-    const [errorQueue, setErrorQueue] = useState([])
-    const navigate = useNavigate()
-    const location = useLocation()
     const [cookies, setCookie] = useCookies(['planningCat_name'])
 
-    const today = new Date()
-    const inAYear = new Date()
-    inAYear.setFullYear(today.getFullYear() + 1)
+    const [sessionId, setSessionId] = useState(null)
+    const [userId, setUserId] = useState(null)
+    const [savedUsername, setSavedUsername] = useState('')
+    const [participants, setParticipants] = useState([])
+    const [votesHidden, setVotesHidden] = useState(true)
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const { addError } = useErrorQueue()
+
+    const inAYear = useMemo(() => {
+        const date = new Date()
+        date.setFullYear(date.getFullYear() + 1)
+        return date
+    }, [])
+
+    const updateSessionState = (jsonMessage) => {
+        if (!jsonMessage) return
+        setParticipants(jsonMessage?.votes_info)
+        if (jsonMessage?.votes_hidden !== votesHidden && jsonMessage?.votes_hidden !== undefined) {
+            setVotesHidden(jsonMessage?.votes_hidden)
+        }
+    }
+
+    const goHome = () => navigate('/' + FRONTEND_FOLDER)
+
+    const goToSession = (sid) => navigate(`${FRONTEND_FOLDER.length ? '/' + FRONTEND_FOLDER : ''}/${sid}`)
+
+    const resetSession = () => {
+        setSessionId(null)
+        setUserId(null)
+    }
+
+    const { processError } = useSessionErrors({
+        onBadRequest: () => {
+            resetSession()
+            goHome()
+            addError('server says it\'s a weird request')
+        },
+        onSessionGone: () => {
+            resetSession()
+            goHome()
+            addError('no such session :(')
+        }
+    })
 
     const createSession = () => {
-        const createSessionUrl = BACKEND_URL + '/sessions'
-        axios.post(createSessionUrl)
+        sessionApi.createSession()
             .then((response) => {
                 setSessionId(response.data.id)
-                const path = FRONTEND_FOLDER.length ? '/' + FRONTEND_FOLDER + '/' + response.data.id : '/' + response.data.id
-                navigate(path)
+                goToSession(response.data.id)
             })
-            .catch((error) => {
-                addError(error)
-            })
+            .catch(processError)
     }
 
     const joinSession = (sid) => {
-        const checkSessionUrl = BACKEND_URL + '/sessions/' + sid
-        axios.get(checkSessionUrl)
-            .then(() => {
-                setSessionId(sid)
-            })
-            .catch((error) => {
-                addError(error)
-            })
+        sessionApi.checkSessionExists(sid)
+            .then(() => setSessionId(sid))
+            .catch(processError)
     }
 
-    const createUser = (username) => {
+    const doesSessionExist = async (sid) => {
+        try {
+            await sessionApi.checkSessionExists(sid)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    const createUser = async (username) => {
+        setSavedUsername(username)
         if (cookies.planningCat_name !== username) {
             setCookie('planningCat_name', username, { expires: inAYear })
         }
-        const joinSessionUrl = BACKEND_URL + '/sessions/' + sessionId + '/join'
-        axios.post(joinSessionUrl, JSON.stringify({ name: username }))
-            .then((response) => {
-                setUserId(response.data.id)
-                const path = FRONTEND_FOLDER.length ? '/' + FRONTEND_FOLDER + '/' + sessionId : '/' + sessionId
-                navigate(path)
-            })
-            .catch((error) => {
-                addError(error)
-            })
-    }
-
-    const addError = (newError) => {
-        let errorText
-        if (newError.message) {
-            if (newError.response) {
-                const status = newError.response.status
-                if (status === 404) {
-                    setSessionId(null)
-                    setUserId(null)
-                    errorText = 'no such session :('
-                    navigate('/' + FRONTEND_FOLDER)
-                } else if (status === 400) {
-                    setSessionId(null)
-                    setUserId(null)
-                    errorText = 'server says it\'s a weird request'
-                    navigate('/' + FRONTEND_FOLDER)
-                }
-                else {
-                    errorText = newError.message + ': ' + newError.response.statusText
-                }
-            } else {
-                errorText = newError.message
-            }
-        } else {
-            errorText = newError
+        try {
+            const response = await sessionApi.joinSession(sessionId, username)
+            setUserId(response.data.id)
+            goToSession(sessionId)
+            return response.data.id
+        } catch (error) {
+            processError(error)
+            return null
         }
-        setErrorQueue(prev => [...prev, errorText])
     }
 
-    const removeError = () => {
-        setErrorQueue(prev => prev.slice(1))
+    const handleUserReconnect = async () => {
+        const username = savedUsername || cookies.planningCat_name
+        if (!username) return null
+
+        const sidValid = await doesSessionExist(sessionId)
+        if (!sidValid) return null
+
+        const freshUserId = await createUser(username)
+        if (freshUserId === null) return null
+
+
+        const freshMessage = await sessionApi.getSessionState(sessionId, freshUserId)
+            .then((response) => response.data)
+        if (!freshMessage) return null
+        addError('you were reconnected', false)
+
+        updateSessionState(freshMessage)
+
+        return { userId: freshUserId, votesHidden: freshMessage.votes_hidden }
     }
+
+    const canPerformAction = (actionName, hidden) => {
+        switch (actionName) {
+            case 'vote': return hidden
+            case 'showVotes': return hidden
+            case 'clearVotes': return !hidden
+            default: return false
+        }
+    }
+
+    const { withRetry } = useRetryableAction({
+        getSessionId: () => sessionId,
+        getUserId: () => userId,
+        reconnect: handleUserReconnect,
+        processError,
+        canPerformAction
+    })
+
+    const vote = withRetry((sid, uid, voteValue) => sessionApi.vote(sid, uid, voteValue), 'vote')
+    const showVotes = withRetry((sid, uid) => sessionApi.showVotes(sid, uid), 'showVotes')
+    const clearVotes = withRetry((sid, uid) => sessionApi.clearVotes(sid, uid), 'clearVotes')
+
+    const countAverage = () => {
+        const votes = participants ? participants.map(p => p.vote) : []
+        return mountainGoat.average(votes)
+    }
+
+    const { lastJsonMessage, readyState, waitForNextMessage } = useSessionSocket(
+        BACKEND_URL,
+        sessionId,
+        userId,
+        {
+            onReconnectStop: () => {
+                resetSession()
+                goHome()
+                addError('Something\'s really wrong. Try again maybe')
+            },
+        }
+    )
+
+    useEffect(() => {
+        updateSessionState(lastJsonMessage)
+    }, [lastJsonMessage])
 
     useEffect(() => {
         const numToSlice = FRONTEND_FOLDER.length ? FRONTEND_FOLDER.length + 2 : 1
@@ -106,12 +184,18 @@ export default function PockerApp() {
             <Header />
             {!sessionId && <CreateForm onCreate={createSession} onJoin={joinSession} />}
             {sessionId && !userId && <JoinForm onJoin={createUser} cookieValue={cookies.planningCat_name} />}
-            {userId && <Game sessionId={sessionId} userId={userId} onError={addError} />}
-            <div className="error-container">
-                {errorQueue.map((err, idx) => (
-                    <ErrorMessage key={idx} message={err} onRemove={removeError} />
-                ))}
-            </div>
+            {userId && readyState !== ReadyState.OPEN && <Loader />}
+            {userId && readyState === ReadyState.OPEN &&
+                <Game
+                    sessionId={sessionId}
+                    votesHidden={votesHidden}
+                    average={countAverage()}
+                    voteFn={vote}
+                    showVotesFn={showVotes}
+                    clearVotesFn={clearVotes}
+                    participants={participants}
+                />}
+            <ErrorQueue />
         </>
     )
 }

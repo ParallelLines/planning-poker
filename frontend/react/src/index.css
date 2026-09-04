@@ -19,7 +19,9 @@
     --vote-indicator-voted: hsl(68, 100%, 72%);
     --vote-indicator-shadow: hsl(130, 80%, 55%);
     --error-red: hsl(7, 65%, 56%);
+    --error-green: hsl(141, 55%, 48%);
     --border-radius: 0.4rem;
+    --margin-top: 1rem;
 }
 
 html,
@@ -42,9 +44,9 @@ html {
     grid-template-columns: 2fr 3fr 2fr;
     grid-template-rows: 2fr 5fr 4fr;
     grid-template-areas:
-        "left-sidebar header header-right"
-        "left-sidebar main right-sidebar"
-        "left-sidebar errors right-sidebar";
+        "left-sidebar  header    header-right"
+        "left-sidebar  main      right-sidebar"
+        "left-sidebar  errors    right-sidebar";
     gap: 1rem 1rem;
     width: 100%;
     height: 100%;
@@ -54,12 +56,16 @@ header {
     grid-area: header;
     justify-self: center;
     height: 100%;
-    padding-top: 0.5rem;
+    margin-top: var(--margin-top);
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 nav {
     grid-area: header-right;
+    position: relative;
     padding-right: 0.5rem;
 }
 
@@ -80,6 +86,12 @@ main>* {
 aside.participants {
     grid-area: left-sidebar;
     position: relative;
+}
+
+.loader {
+    grid-area: main;
+    justify-self: center;
+    align-self: center;
 }
 
 #logo {
@@ -380,11 +392,19 @@ text {
 
 .error-message {
     display: inline-block;
-    color: var(--error-red);
-    border: 0.1rem solid var(--error-red);
     border-radius: var(--border-radius);
     padding: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.error-message.bad {
+    color: var(--error-red);
+    border: 0.1rem solid var(--error-red);
+}
+
+.error-message.good {
+    color: var(--error-green);
+    border: 0.1rem solid var(--error-green);
 }
 
 .error-page {
@@ -408,7 +428,7 @@ text {
 .settings {
     display: flex;
     flex-direction: column;
-    padding-top: 0.5rem;
+    margin-top: var(--margin-top);
     align-items: flex-end;
 }
 
@@ -450,7 +470,7 @@ text {
 #relativeSVG-fart {
     position: absolute;
     left: -1.3rem;
-    top: 1.8rem;
+    top: 1.3rem;
 }
 
 .fart {
@@ -485,14 +505,14 @@ text {
 
     #relativeSVG-fart {
         position: absolute;
-        left: -1.3rem;
-        top: 1.5rem;
+        left: -1.35rem;
+        top: 1rem;
     }
 
     aside.participants {
         grid-area: header;
         max-width: 30%;
-        padding-top: 0.5rem;
+        margin-top: var(--margin-top);
     }
 
     #show-participants-btn {
@@ -560,6 +580,10 @@ text {
 }
 
 @media (max-width: 800px) {
+    #root {
+        grid-template-rows: 4fr 5fr 4fr;
+    }
+
     nav {
         grid-area: header;
         padding-right: 0;

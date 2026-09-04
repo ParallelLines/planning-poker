@@ -31,7 +31,7 @@ export default function AnimatedLogo() {
                 </g>
             </svg>
 
-            <IconLogo animation={animate}/>
+            <IconLogo animation={animate} />
 
             <svg display="none">
                 <defs>
