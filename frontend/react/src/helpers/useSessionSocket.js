@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 import useWebSocket from 'react-use-websocket'
 
 export function useSessionSocket(baseURL, sessionId, userId, handlers = {}) {
@@ -18,10 +18,17 @@ export function useSessionSocket(baseURL, sessionId, userId, handlers = {}) {
         {
             // onOpen: () => console.log('WS connection established'),
             shouldReconnect: (closeEvent) => true,
+            retryOnError: true,
             reconnectAttempts: 5,
             onReconnectStop,
             reconnectInterval: 1000,
             canConnect,
+            onClose: (closeEvent) => {
+                console.log('WS closed:', closeEvent.code, closeEvent.reason)
+            },
+            onError: (error) => {
+                console.log('WS error:', error)
+            }
         }
     )
 

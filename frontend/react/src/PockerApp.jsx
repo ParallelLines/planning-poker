@@ -119,7 +119,6 @@ export default function PockerApp() {
         const freshUserId = await createUser(username)
         if (freshUserId === null) return null
 
-
         const freshMessage = await sessionApi.getSessionState(sessionId, freshUserId)
             .then((response) => response.data)
         if (!freshMessage) return null
@@ -156,15 +155,18 @@ export default function PockerApp() {
         return mountainGoat.average(votes)
     }
 
-    const { lastJsonMessage, readyState, waitForNextMessage } = useSessionSocket(
+    const { lastJsonMessage, readyState } = useSessionSocket(
         BACKEND_URL,
         sessionId,
         userId,
         {
-            onReconnectStop: () => {
-                resetSession()
-                goHome()
-                addError('Something\'s really wrong. Try again maybe')
+            onReconnectStop: async () => {
+                const reconnected = await handleUserReconnect()
+                if (!reconnected) {
+                    resetSession()
+                    goHome()
+                    addError('Something\'s really wrong. Try again maybe')
+                }
             },
         }
     )
