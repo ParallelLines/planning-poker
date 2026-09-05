@@ -132,6 +132,7 @@ export default function PockerApp() {
         if (freshUserId === null) return null
 
         const freshMessage = await requestAndUpdateSessionState(freshUserId)
+        if (!freshMessage) return null
 
         return { userId: freshUserId, votesHidden: freshMessage.votes_hidden }
     }
@@ -169,7 +170,11 @@ export default function PockerApp() {
         {
             onOpen: async () => {
                 console.log('WS connection established')
-                await requestAndUpdateSessionState(userId, false)
+                try {
+                    await requestAndUpdateSessionState(userId, false)
+                } catch (error) {
+                    processError(error)
+                }
             },
             onReconnectStop: async () => {
                 const reconnected = await handleUserReconnect()
