@@ -47,6 +47,18 @@ export default function PockerApp() {
         }
     }
 
+    const requestAndUpdateSessionState = async (uid, showMessage = true) => {
+        const freshMessage = await sessionApi.getSessionState(sessionId, uid)
+            .then((response) => response.data)
+        if (!freshMessage) return null
+
+        if (showMessage) addError('you were reconnected', false)
+
+        updateSessionState(freshMessage)
+
+        return freshMessage
+    }
+
     const goHome = () => navigate('/' + FRONTEND_FOLDER)
 
     const goToSession = (sid) => navigate(`${FRONTEND_FOLDER.length ? '/' + FRONTEND_FOLDER : ''}/${sid}`)
@@ -119,12 +131,7 @@ export default function PockerApp() {
         const freshUserId = await createUser(username)
         if (freshUserId === null) return null
 
-        const freshMessage = await sessionApi.getSessionState(sessionId, freshUserId)
-            .then((response) => response.data)
-        if (!freshMessage) return null
-        addError('you were reconnected', false)
-
-        updateSessionState(freshMessage)
+        const freshMessage = await requestAndUpdateSessionState(freshUserId)
 
         return { userId: freshUserId, votesHidden: freshMessage.votes_hidden }
     }
@@ -160,6 +167,10 @@ export default function PockerApp() {
         sessionId,
         userId,
         {
+            onOpen: async () => {
+                console.log('WS connection established')
+                await requestAndUpdateSessionState(userId, false)
+            },
             onReconnectStop: async () => {
                 const reconnected = await handleUserReconnect()
                 if (!reconnected) {

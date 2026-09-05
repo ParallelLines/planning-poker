@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import useWebSocket from 'react-use-websocket'
 
 export function useSessionSocket(baseURL, sessionId, userId, handlers = {}) {
-    const { onReconnectStop } = handlers
+    const { onReconnectStop, onOpen } = handlers
     const canConnect = sessionId !== null && userId !== null
 
     const wsURL = useMemo(() => {
@@ -23,7 +23,7 @@ export function useSessionSocket(baseURL, sessionId, userId, handlers = {}) {
             onReconnectStop,
             reconnectInterval: 1000,
             canConnect,
-            onOpen: () => console.log('WS connection established'),
+            onOpen,
             onClose: (closeEvent) => {
                 console.log('WS closed:', closeEvent.code, closeEvent.reason)
             },
