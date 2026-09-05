@@ -172,6 +172,10 @@ export default function PockerApp() {
     )
 
     useEffect(() => {
+        console.log('readyState: ', readyState)
+    }, [readyState])
+
+    useEffect(() => {
         updateSessionState(lastJsonMessage)
     }, [lastJsonMessage])
 

@@ -16,13 +16,14 @@ export function useSessionSocket(baseURL, sessionId, userId, handlers = {}) {
     const { lastJsonMessage, readyState } = useWebSocket(
         wsURL,
         {
-            // onOpen: () => console.log('WS connection established'),
+
             shouldReconnect: (closeEvent) => true,
             retryOnError: true,
             reconnectAttempts: 5,
             onReconnectStop,
             reconnectInterval: 1000,
             canConnect,
+            onOpen: () => console.log('WS connection established'),
             onClose: (closeEvent) => {
                 console.log('WS closed:', closeEvent.code, closeEvent.reason)
             },

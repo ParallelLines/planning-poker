@@ -13,9 +13,17 @@ export function useRetryableAction({ getSessionId, getUserId, reconnect, process
                 processError(error)
                 return
             }
+
             console.log('refreshing user id...')
-            const { userId: freshUserId, votesHidden } = await reconnect()
-            if (freshUserId == null) {
+            const response = await reconnect()
+            if (!response) {
+                console.log('could not refresh the user id, session does not exist')
+                processError(error)
+                return
+            }
+
+            const { userId: freshUserId, votesHidden } = response
+            if (!freshUserId) {
                 console.log('could not refresh the user id, so doing standard procedure')
                 processError(error)
                 return
